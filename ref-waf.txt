@@ -1,0 +1,17 @@
+
+
+https://aws.amazon.com/premiumsupport/knowledge-center/waf-block-common-attacks/
+
+https://aws.amazon.com/waf/preconfiguredrules/
+https://github.com/aws-samples/aws-waf-sample
+
+https://aws.amazon.com/solutions/implementations/aws-waf-security-automations/
+# Samples in above solution
+https://github.com/aws-samples/aws-waf-sample
+
+OWASP Top 10 - 2017
+https://d0.awsstatic.com/whitepapers/Security/aws-waf-owasp.pdf
+CF Template https://s3.us-east-2.amazonaws.com/awswaf-owasp/owasp_10_base.yml
+
+Hacker One
+https://www.hackerone.com/top-10-vulnerabilities

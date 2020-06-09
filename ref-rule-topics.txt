@@ -1,0 +1,52 @@
+
+# Handle OWASP top 10 2017 & 2020 (not released yet)
+
+### OWASP Top 10 – 2017
+https://owasp.org/www-pdf-archive/OWASP_Top_10-2017_%28en%29.pdf.pdf
+01 Injection (SQL,...)
+02 Broken Authentication (known auth tokens in headers, cookies)
+03 Sensitive Data Exposure
+04 XML External Entities (XXE)
+05 Broken Access control
+06 Security misconfigurations
+07 Cross Site Scripting (XSS)
+08 Insecure Deserialization
+09 Using Components with known vulnerabilities
+10 Insufficient logging and monitoring
+
+### OWASP Top 10 – 2013
+https://owasp.org/www-pdf-archive/OWASP_Top_10_-_2013.pdf
+A1 – Injection
+A2 – Broken Authentication and Session Management
+A3 – Cross-Site Scripting (XSS)
+A4 – Insecure Direct Object References - Merged with A7 into 2017-A5
+A5 – Security Misconfiguration
+A6 – Sensitive Data Exposure
+A7 – Missing Function Level Access Control - Merged with A4 into 2017-A5
+A8 – Cross-Site Request Forgery (CSRF)
+A9 – Using Known Vulnerable Components
+A10 – Unvalidated Redirects and Forwards
+
+### OWASP Top 10 – 2010
+https://owasp.org/www-pdf-archive/OWASP_Top_10_-_2010.pdf
+A1 – Injection
+A2 – Cross-Site Scripting (XSS)
+A3 – Broken Authentication and Session Management
+A4 – Insecure Direct Object References
+A5 – Cross-Site Request Forgery (CSRF)
+A6 – Security Misconfiguration
+A7 – Insecure Cryptographic Storage – Merged with A9 into 2013-A6
+A8 – Failure to Restrict URL Access – Broadened into 2013-A7
+A9 – Insufficient Transport Layer Protection - Merged with A7 into 2013-A6
+A10 – Unvalidated Redirects and Forwards
+
+### OWASP Top 10 – 2007
+https://owasp.org/www-pdf-archive//OWASP_Top_10_2007.pdf
+
+### OWASP Top 10 – 2004
+
+### Addition Security
+HTTP Flood rate limit
+Country whitelist (US, eu, india)/blacklist (NG,PK,RU,UA)
+Blacklists: Bad bots, Scanner probes, Reputation list, manual IPs
+Whitelists: NAT gateways
