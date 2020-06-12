@@ -1,7 +1,7 @@
 
-# OWASP PHP Security Misconfiguration
+# OWASP Top 10 2017-A6, 2013-A5, 2010-A6, 2007-A6
+# PHP Security Misconfiguration
 
-# php
 variable "rule_php" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
@@ -40,12 +40,15 @@ variable "rule_php_insecure_query_string_parts" {
     "safe_mode="
   ]
 }
+locals {
+  # Determine if the PHP rule is enabled
+  is_php_enabled = var.enabled && contains(var.enable_actions, var.rule_php) ? 1 : 0
+}
 
-
-resource "aws_waf_rule" "detect_php_insecure" {
+resource "aws_waf_rule" "owasp_security_misconfig_php" {
   count       = local.is_php_enabled
   name        = "${var.waf_prefix}-generic-detect-php-insecure"
-  metric_name = "${var.waf_prefix}genericdetectphpinsecure"
+  metric_name = replace("${var.waf_prefix}genericdetectphpinsecure", "/[^0-9A-Za-z]/", "")
   predicates {
     data_id = aws_waf_byte_match_set.match_php_insecure_uri[0].id
     negated = false

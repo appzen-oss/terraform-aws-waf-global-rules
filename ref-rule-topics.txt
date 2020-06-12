@@ -1,49 +1,73 @@
 
-# Handle OWASP top 10 2017 & 2020 (not released yet)
+# Handle OWASP top 10 2020 (not released yet)
 
 ### OWASP Top 10 – 2017
 https://owasp.org/www-pdf-archive/OWASP_Top_10-2017_%28en%29.pdf.pdf
-01 Injection (SQL,...)
-02 Broken Authentication (known auth tokens in headers, cookies)
-03 Sensitive Data Exposure
-04 XML External Entities (XXE)
-05 Broken Access control
-06 Security misconfigurations
-07 Cross Site Scripting (XSS)
-08 Insecure Deserialization
-09 Using Components with known vulnerabilities
-10 Insufficient logging and monitoring
+A01 Injection (SQL,...)
+A02 Broken Authentication (known auth tokens in headers, cookies)
+A03 Sensitive Data Exposure
+A04 XML External Entities (XXE)
+A05 Broken Access control
+A06 Security misconfigurations
+A07 Cross Site Scripting (XSS)
+A08 Insecure Deserialization
+A09 Using Components with known vulnerabilities
+A10 Insufficient logging and monitoring
 
 ### OWASP Top 10 – 2013
 https://owasp.org/www-pdf-archive/OWASP_Top_10_-_2013.pdf
-A1 – Injection
-A2 – Broken Authentication and Session Management
-A3 – Cross-Site Scripting (XSS)
-A4 – Insecure Direct Object References - Merged with A7 into 2017-A5
-A5 – Security Misconfiguration
-A6 – Sensitive Data Exposure
-A7 – Missing Function Level Access Control - Merged with A4 into 2017-A5
-A8 – Cross-Site Request Forgery (CSRF)
-A9 – Using Known Vulnerable Components
+A01 – Injection
+A02 – Broken Authentication and Session Management
+A03 – Cross-Site Scripting (XSS)
+A04 – Insecure Direct Object References - Merged with A7 into 2017-A5
+A05 – Security Misconfiguration
+A06 – Sensitive Data Exposure
+A07 – Missing Function Level Access Control - Merged with A4 into 2017-A5
+A08 – Cross-Site Request Forgery (CSRF)
+A09 – Using Known Vulnerable Components
 A10 – Unvalidated Redirects and Forwards
 
 ### OWASP Top 10 – 2010
 https://owasp.org/www-pdf-archive/OWASP_Top_10_-_2010.pdf
-A1 – Injection
-A2 – Cross-Site Scripting (XSS)
-A3 – Broken Authentication and Session Management
-A4 – Insecure Direct Object References
-A5 – Cross-Site Request Forgery (CSRF)
-A6 – Security Misconfiguration
-A7 – Insecure Cryptographic Storage – Merged with A9 into 2013-A6
-A8 – Failure to Restrict URL Access – Broadened into 2013-A7
-A9 – Insufficient Transport Layer Protection - Merged with A7 into 2013-A6
+A01 – Injection
+A02 – Cross-Site Scripting (XSS)
+A03 – Broken Authentication and Session Management
+A04 – Insecure Direct Object References
+A05 – Cross-Site Request Forgery (CSRF)
+A06 – Security Misconfiguration
+A07 – Insecure Cryptographic Storage – Merged with A9 into 2013-A6
+A08 – Failure to Restrict URL Access – Broadened into 2013-A7
+A09 – Insufficient Transport Layer Protection - Merged with A7 into 2013-A6
 A10 – Unvalidated Redirects and Forwards
 
 ### OWASP Top 10 – 2007
 https://owasp.org/www-pdf-archive//OWASP_Top_10_2007.pdf
+A01 – Cross Site Scripting (XSS)
+A02 – Injection Flaws
+A03 – Malicious File Execution
+A04 – Insecure Direct Object Reference
+A05 – Cross Site Request Forgery (CSRF)
+A06 – Information Leakage and Improper Error Handling
+A07 – Broken Authentication and Session Management
+A08 – Insecure Cryptographic Storage
+A09 – Insecure Communications
+A10 – Failure to Restrict URL Access
 
 ### OWASP Top 10 – 2004
+
+### Hackerone Top 10 - 2019
+https://www.hackerone.com/top-10-vulnerabilities
+https://www.hackerone.com/blog/hackerone-top-10-most-impactful-and-rewarded-vulnerability-types
+01 - Cross-site Scripting (XSS)
+02 - Improper Authentication
+03 - Information Disclosure
+04 - Privilege Escalation
+05 - SQL Injection
+06 - Code Injection
+07 - Server-Side Request Forgery (SSRF)
+08 - Insecure Direct Object Reference (IDOR)
+09 - Improper Access Control
+10 - Cross-Site Request Forgery (CSRF)
 
 ### Addition Security
 HTTP Flood rate limit

@@ -1,7 +1,6 @@
 
 # OWASP Admin access
 
-# admin access
 variable "rule_admin_access" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
@@ -27,11 +26,15 @@ variable "rule_admin_access_paths" {
   description = "A black list of relative paths."
   default     = ["/admin"]
 }
+locals {
+  # Determine if the Admin Access rule is enabled
+  is_admin_access_enabled = var.enabled && contains(var.enable_actions, var.rule_admin_access) ? 1 : 0
+}
 
 resource "aws_waf_rule" "detect_admin_access" {
   count       = local.is_admin_access_enabled
   name        = "${var.waf_prefix}-generic-detect-admin-access"
-  metric_name = "${var.waf_prefix}genericdetectadminaccess"
+  metric_name = replace("${var.waf_prefix}genericdetectadminaccess", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_ipset.admin_remote_ipset[0].id

@@ -28,10 +28,15 @@ variable "rule_country_of_origin_paths" {
   default     = ["/*"]
 }
 
+locals {
+  # Determine if the Country of Origin rule is enabled
+  is_country_of_origin_enabled = var.enabled && contains(var.enable_actions, var.rule_country_of_origin) ? 1 : 0
+}
+
 resource "aws_waf_rule" "country_of_origin_filter" {
   count       = local.is_country_of_origin_enabled
   name        = "${var.waf_prefix}-generic-country-of-origin-filter"
-  metric_name = "${var.waf_prefix}genericcountryoforiginfilter"
+  metric_name = replace("${var.waf_prefix}genericcountryoforiginfilter", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_geo_match_set.geo_match_set[0].id

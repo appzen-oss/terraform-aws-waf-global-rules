@@ -39,11 +39,15 @@ variable "rule_size_constraints_header_map" {
     }
   ]
 }
+locals {
+  # Determine if the Size Constraints rule is enabled
+  is_size_constraints_enabled = var.enabled && contains(var.enable_actions, var.rule_size_constraints) ? 1 : 0
+}
 
-resource "aws_waf_rule" "restrict_sizes" {
+resource "aws_waf_rule" "owasp_size_restriction" {
   count       = local.is_size_constraints_enabled
   name        = "${var.waf_prefix}-generic-restrict-sizes"
-  metric_name = "${var.waf_prefix}genericrestrictsizes"
+  metric_name = replace("${var.waf_prefix}genericrestrictsizes", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_size_constraint_set.size_restrictions[0].id

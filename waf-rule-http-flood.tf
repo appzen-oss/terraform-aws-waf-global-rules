@@ -22,11 +22,15 @@ variable "rule_rate_limit_paths" {
   description = "A list of relative URL paths to rate limit"
   default     = []
 }
+locals {
+  # Determine if Rate Limiting is enabled
+  is_rate_limit_enabled = var.enabled && contains(var.enable_actions, var.rule_rate_limit) ? 1 : 0
+}
 
 resource "aws_waf_rate_based_rule" "rate_limit" {
   count       = local.is_rate_limit_enabled
   name        = "${var.waf_prefix}-rate-limit"
-  metric_name = "${var.waf_prefix}ratelimit"
+  metric_name = replace("${var.waf_prefix}ratelimit", "/[^0-9A-Za-z]/", "")
   rate_key    = "IP"
   rate_limit  = var.rule_rate_limit_count
   predicates {

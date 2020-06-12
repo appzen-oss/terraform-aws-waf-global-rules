@@ -21,11 +21,15 @@ variable "rule_rfi_lfi_uri" {
   description = "A list of values to look for traversal attacks in the request URI."
   default     = ["://", "../"]
 }
+locals {
+  # Determine if the RFI/LFI rule is enabled
+  is_rfi_lfi_enabled = var.enabled && contains(var.enable_actions, var.rule_rfi_lfi) ? 1 : 0
+}
 
-resource "aws_waf_rule" "detect_rfi_lfi_traversal" {
+resource "aws_waf_rule" "owasp_path_traversal" {
   count       = local.is_rfi_lfi_enabled
   name        = "${var.waf_prefix}-generic-detect-rfi-lfi-traversal"
-  metric_name = "${var.waf_prefix}genericdetectrfilfitraversal"
+  metric_name = replace("${var.waf_prefix}genericdetectrfilfitraversal", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_byte_match_set.match_rfi_lfi_traversal[0].id

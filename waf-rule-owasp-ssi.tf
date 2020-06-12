@@ -1,5 +1,6 @@
 
 # OWASP SSI
+# Server Side Includes
 
 variable "rule_ssi" {
   type        = string
@@ -21,11 +22,15 @@ variable "rule_ssi_paths" {
   description = "A blacklist of relative paths within the URI of a request."
   default     = ["/includes"]
 }
+locals {
+  # Determine if the SSI rule is enabled
+  is_ssi_enabled = var.enabled && contains(var.enable_actions, var.rule_ssi) ? 1 : 0
+}
 
-resource "aws_waf_rule" "detect_ssi" {
+resource "aws_waf_rule" "owasp_ssi" {
   count       = local.is_ssi_enabled
   name        = "${var.waf_prefix}-generic-detect-ssi"
-  metric_name = "${var.waf_prefix}genericdetectssi"
+  metric_name = replace("${var.waf_prefix}genericdetectssi", "/[^0-9A-Za-z]/", "")
   predicates {
     data_id = aws_waf_byte_match_set.match_ssi[0].id
     negated = false

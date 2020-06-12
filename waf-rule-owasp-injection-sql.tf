@@ -1,19 +1,22 @@
-# Variables
-#   waf_prefix,
-variable "waf_prefix" {
-  type        = string
-  description = "A prefix to use for all named resources."
-  default     = "testy"
-}
 
-## OWASP Top 10 2017-A1
+## OWASP Top 10 2017-A1, 2013-A1, 2010-A1, 2007-A2
 ## SQL Injection Attacks
 ## Matches attempted SQL injection patterns (controlled by variables) in request
 ##    In fields: BODY, QUERY_STRING, URI
 ##    In headers: authorization, cookie
 
 # TODO: Add count to make optional? By rule, entire module, both?
-#enable_rule_sql_injection
+variable "rule_owasp_injection_sql_action" {
+  type        = string
+  description = "COUNT or BLOCK, any other value will disable this rule entirely."
+  default     = "DISABLED"
+}
+variable "rule_owasp_injection_sql_priority" {
+  type        = number
+  description = "The priority in which to execute this rule."
+  default     = 40
+}
+
 variable "rule_sqli_request_fields" {
   type        = list(string)
   description = "A list of fields in the request to look for SQL injection attacks."
@@ -35,8 +38,13 @@ variable "rule_sqli_request_headers_transforms" {
   description = "A list of text tranformations to perform on headers before looking for SQL injection attacks."
   default     = ["HTML_ENTITY_DECODE", "URL_DECODE"]
 }
+locals {
+  # Determine if the SQLi rule is enabled
+  is_owasp_injection_sql_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_injection_sql_action) ? 1 : 0
+}
 
-resource aws_waf_rule mitigate_sqli {
+resource aws_waf_rule owasp_injection_sql {
+  #count       = local.is_owasp_injection_sql_enabled
   name        = "${var.waf_prefix}-generic-mitigate-sqli"
   metric_name = replace("${var.waf_prefix}genericmitigatesqli", "/[^0-9A-Za-z]/", "")
 
@@ -48,6 +56,7 @@ resource aws_waf_rule mitigate_sqli {
 }
 
 resource aws_waf_sql_injection_match_set sql_injection_match_set {
+  #count       = local.is_owasp_injection_sql_enabled
   name = "${var.waf_prefix}-generic-detect-sqli"
   dynamic "sql_injection_match_tuples" {
     iterator = request_field

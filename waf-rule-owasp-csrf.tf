@@ -1,5 +1,6 @@
 
-# OWASP Cross-Site Request Forgery (CSRF)
+# OWASP Top 10 2013-A8, 2010-A5, 2007-A5
+# Cross-Site Request Forgery (CSRF)
 
 # csrf - cross site request forgery
 variable "rule_csrf" {
@@ -22,11 +23,15 @@ variable "rule_csrf_size" {
   description = "The size of your CSRF token."
   default     = 36
 }
+locals {
+  # Determine if the CSRF rule is enabled
+  is_csrf_enabled = var.enabled && contains(var.enable_actions, var.rule_csrf) ? 1 : 0
+}
 
-resource "aws_waf_rule" "enforce_csrf" {
+resource "aws_waf_rule" "owasp_csrf" {
   count       = local.is_csrf_enabled
   name        = "${var.waf_prefix}-generic-enforce-csrf"
-  metric_name = "${var.waf_prefix}genericenforcecsrf"
+  metric_name = replace("${var.waf_prefix}genericenforcecsrf", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_byte_match_set.match_csrf_method[0].id
