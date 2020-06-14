@@ -1,5 +1,11 @@
 
 # Common Variables
+variable "create_rule_group_owasp" {
+  type        = bool
+  description = "Create WAF rule group of OWASP rules"
+  default     = true
+}
+
 variable "enable_actions" {
   type        = list(string)
   description = "List of valid actions for enabling indivisual rules"

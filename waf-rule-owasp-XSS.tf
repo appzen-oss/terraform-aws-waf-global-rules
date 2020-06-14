@@ -1,4 +1,15 @@
 
+variable "rule_owasp_xss_action" {
+  type        = string
+  description = "COUNT or BLOCK, any other value will disable this rule entirely."
+  default     = "DISABLED"
+}
+variable "rule_owasp_xss_priority" {
+  type        = number
+  description = "The priority in which to execute this rule."
+  default     = 50
+}
+
 variable "rule_xss_request_fields" {
   type        = list(string)
   description = "A list of fields in the request to look for XSS attacks."
@@ -21,14 +32,14 @@ variable "rule_xss_request_headers_transforms" {
 }
 locals {
   # Determine if the XSS rule is enabled
-  is_xss_enabled = var.enabled && contains(var.enable_actions, var.rule_xss) ? 1 : 0
+  is_owasp_xss_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_xss_action) ? 1 : 0
 }
 
 ## OWASP Top 10 2017-A7, 2013-A3, 2010-A2, 2007-A1
 ## Cross-site scripting (XSS)
 
 resource "aws_waf_rule" "owasp_xss" {
-  count       = local.is_xss_enabled
+  count       = local.is_owasp_xss_enabled
   name        = "${var.waf_prefix}-generic-mitigate-xss"
   metric_name = replace("${var.waf_prefix}genericmitigatexss", "/[^0-9A-Za-z]/", "")
 
@@ -41,7 +52,7 @@ resource "aws_waf_rule" "owasp_xss" {
 }
 
 resource "aws_waf_xss_match_set" "xss_match_set" {
-  count       = local.is_xss_enabled
+  count       = local.is_owasp_xss_enabled
   name  = "${var.waf_prefix}-generic-detect-xss"
 
   dynamic "xss_match_tuples" {

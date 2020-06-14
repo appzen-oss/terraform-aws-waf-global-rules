@@ -44,19 +44,19 @@ locals {
 }
 
 resource aws_waf_rule owasp_injection_sql {
-  #count       = local.is_owasp_injection_sql_enabled
+  count       = local.is_owasp_injection_sql_enabled
   name        = "${var.waf_prefix}-generic-mitigate-sqli"
   metric_name = replace("${var.waf_prefix}genericmitigatesqli", "/[^0-9A-Za-z]/", "")
 
   predicates {
-    data_id = aws_waf_sql_injection_match_set.sql_injection_match_set.id
+    data_id = aws_waf_sql_injection_match_set.sql_injection_match_set[0].id
     negated = false
     type    = "SqlInjectionMatch"
   }
 }
 
 resource aws_waf_sql_injection_match_set sql_injection_match_set {
-  #count       = local.is_owasp_injection_sql_enabled
+  count       = local.is_owasp_injection_sql_enabled
   name = "${var.waf_prefix}-generic-detect-sqli"
   dynamic "sql_injection_match_tuples" {
     iterator = request_field

@@ -1,12 +1,12 @@
 
 # OWASP Path Traversal, rfi, lfi
 # rfi lfi - path traversal
-variable "rule_rfi_lfi" {
+variable "rule_owasp_path_traversal_action" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
   default     = "DISABLED"
 }
-variable "rule_rfi_lfi_priority" {
+variable "rule_owasp_path_traversal_priority" {
   type        = number
   description = "The priority in which to execute this rule."
   default     = 60
@@ -23,11 +23,11 @@ variable "rule_rfi_lfi_uri" {
 }
 locals {
   # Determine if the RFI/LFI rule is enabled
-  is_rfi_lfi_enabled = var.enabled && contains(var.enable_actions, var.rule_rfi_lfi) ? 1 : 0
+  is_owasp_path_traversal_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_path_traversal_action) ? 1 : 0
 }
 
 resource "aws_waf_rule" "owasp_path_traversal" {
-  count       = local.is_rfi_lfi_enabled
+  count       = local.is_owasp_path_traversal_enabled
   name        = "${var.waf_prefix}-generic-detect-rfi-lfi-traversal"
   metric_name = replace("${var.waf_prefix}genericdetectrfilfitraversal", "/[^0-9A-Za-z]/", "")
 
@@ -38,7 +38,7 @@ resource "aws_waf_rule" "owasp_path_traversal" {
   }
 }
 resource "aws_waf_byte_match_set" "match_rfi_lfi_traversal" {
-  count = local.is_rfi_lfi_enabled
+  count = local.is_owasp_path_traversal_enabled
   name  = "${var.waf_prefix}-generic-match-rfi-lfi-traversal"
 
   dynamic "byte_match_tuples" {

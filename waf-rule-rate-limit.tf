@@ -1,8 +1,7 @@
 
-# HTTP Flood, Rate limit
+# Rate limit - HTTP Flood
 
-# rate limiting
-variable "rule_rate_limit" {
+variable "rule_rate_limit_action" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
   default     = "DISABLED"
@@ -24,7 +23,7 @@ variable "rule_rate_limit_paths" {
 }
 locals {
   # Determine if Rate Limiting is enabled
-  is_rate_limit_enabled = var.enabled && contains(var.enable_actions, var.rule_rate_limit) ? 1 : 0
+  is_rate_limit_enabled = var.enabled && contains(var.enable_actions, var.rule_rate_limit_action) ? 1 : 0
 }
 
 resource "aws_waf_rate_based_rule" "rate_limit" {

@@ -2,7 +2,7 @@
 # Country of origin blacklist/whitelist
 
 # country of origin
-variable "rule_country_of_origin" {
+variable "rule_country_of_origin_action" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
   default     = "DISABLED"
@@ -30,7 +30,7 @@ variable "rule_country_of_origin_paths" {
 
 locals {
   # Determine if the Country of Origin rule is enabled
-  is_country_of_origin_enabled = var.enabled && contains(var.enable_actions, var.rule_country_of_origin) ? 1 : 0
+  is_country_of_origin_enabled = var.enabled && contains(var.enable_actions, var.rule_country_of_origin_action) ? 1 : 0
 }
 
 resource "aws_waf_rule" "country_of_origin_filter" {

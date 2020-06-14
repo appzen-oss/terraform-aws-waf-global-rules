@@ -3,12 +3,12 @@
 # Cross-Site Request Forgery (CSRF)
 
 # csrf - cross site request forgery
-variable "rule_csrf" {
+variable "rule_owasp_csrf_action" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
   default     = "DISABLED"
 }
-variable "rule_csrf_priority" {
+variable "rule_owasp_csrf_priority" {
   type        = number
   description = "The priority in which to execute this rule."
   default     = 80
@@ -25,11 +25,11 @@ variable "rule_csrf_size" {
 }
 locals {
   # Determine if the CSRF rule is enabled
-  is_csrf_enabled = var.enabled && contains(var.enable_actions, var.rule_csrf) ? 1 : 0
+  is_owasp_csrf_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_csrf_action) ? 1 : 0
 }
 
 resource "aws_waf_rule" "owasp_csrf" {
-  count       = local.is_csrf_enabled
+  count       = local.is_owasp_csrf_enabled
   name        = "${var.waf_prefix}-generic-enforce-csrf"
   metric_name = replace("${var.waf_prefix}genericenforcecsrf", "/[^0-9A-Za-z]/", "")
 
@@ -46,7 +46,7 @@ resource "aws_waf_rule" "owasp_csrf" {
   }
 }
 resource "aws_waf_byte_match_set" "match_csrf_method" {
-  count = local.is_csrf_enabled
+  count = local.is_owasp_csrf_enabled
   name  = "${var.waf_prefix}-generic-match-csrf-method"
   byte_match_tuples {
     text_transformation   = "LOWERCASE"
@@ -59,7 +59,7 @@ resource "aws_waf_byte_match_set" "match_csrf_method" {
   }
 }
 resource "aws_waf_size_constraint_set" "csrf_token_set" {
-  count = local.is_csrf_enabled
+  count = local.is_owasp_csrf_enabled
   name  = "${var.waf_prefix}-generic-match-csrf-token"
 
   size_constraints {

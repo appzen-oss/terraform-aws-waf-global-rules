@@ -1,12 +1,12 @@
 
 # OWASP Size contraints
 # size constraints
-variable "rule_size_constraints" {
+variable "rule_owasp_size_restriction_action" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
   default     = "DISABLED"
 }
-variable "rule_size_constraints_priority" {
+variable "rule_owasp_size_restriction_priority" {
   type        = number
   description = "The priority in which to execute this rule."
   default     = 10
@@ -41,11 +41,11 @@ variable "rule_size_constraints_header_map" {
 }
 locals {
   # Determine if the Size Constraints rule is enabled
-  is_size_constraints_enabled = var.enabled && contains(var.enable_actions, var.rule_size_constraints) ? 1 : 0
+  is_owasp_size_restriction_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_size_restriction_action) ? 1 : 0
 }
 
 resource "aws_waf_rule" "owasp_size_restriction" {
-  count       = local.is_size_constraints_enabled
+  count       = local.is_owasp_size_restriction_enabled
   name        = "${var.waf_prefix}-generic-restrict-sizes"
   metric_name = replace("${var.waf_prefix}genericrestrictsizes", "/[^0-9A-Za-z]/", "")
 
@@ -56,7 +56,7 @@ resource "aws_waf_rule" "owasp_size_restriction" {
   }
 }
 resource "aws_waf_size_constraint_set" "size_restrictions" {
-  count = local.is_size_constraints_enabled
+  count = local.is_owasp_size_restriction_enabled
   name  = "${var.waf_prefix}-generic-size-restrictions"
   dynamic "size_constraints" {
     iterator = x

@@ -1,12 +1,12 @@
 
 # OWASP Admin access
 
-variable "rule_admin_access" {
+variable "rule_owasp_admin_access_action" {
   type        = string
   description = "COUNT or BLOCK, any other value will disable this rule entirely."
   default     = "DISABLED"
 }
-variable "rule_admin_access_priority" {
+variable "rule_owasp_admin_access_priority" {
   type        = number
   description = "The priority in which to execute this rule."
   default     = 100
@@ -28,11 +28,11 @@ variable "rule_admin_access_paths" {
 }
 locals {
   # Determine if the Admin Access rule is enabled
-  is_admin_access_enabled = var.enabled && contains(var.enable_actions, var.rule_admin_access) ? 1 : 0
+  is_owasp_admin_access_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_admin_access_action) ? 1 : 0
 }
 
 resource "aws_waf_rule" "detect_admin_access" {
-  count       = local.is_admin_access_enabled
+  count       = local.is_owasp_admin_access_enabled
   name        = "${var.waf_prefix}-generic-detect-admin-access"
   metric_name = replace("${var.waf_prefix}genericdetectadminaccess", "/[^0-9A-Za-z]/", "")
 
@@ -49,7 +49,7 @@ resource "aws_waf_rule" "detect_admin_access" {
   }
 }
 resource "aws_waf_ipset" "admin_remote_ipset" {
-  count = local.is_admin_access_enabled
+  count = local.is_owasp_admin_access_enabled
   name  = "${var.waf_prefix}-generic-match-admin-remote-ip"
   dynamic "ip_set_descriptors" {
     iterator = x
@@ -69,7 +69,7 @@ resource "aws_waf_ipset" "admin_remote_ipset" {
   }
 }
 resource "aws_waf_byte_match_set" "match_admin_url" {
-  count = local.is_admin_access_enabled
+  count = local.is_owasp_admin_access_enabled
   name  = "${var.waf_prefix}-generic-match-admin-url"
   dynamic "byte_match_tuples" {
     iterator = x
