@@ -28,7 +28,7 @@ resource "aws_waf_rule" "whitelist" {
   depends_on = [aws_waf_ipset.whitelist]
   count = local.is_whitelist_enabled
   name = "${var.waf_prefix}-whitelist"
-  metric_name = "${var.waf_prefix}whitelistWafRule"
+  metric_name = replace("${var.waf_prefix}whitelistWafRule", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_ipset.whitelist[0].id

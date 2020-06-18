@@ -5,7 +5,7 @@
 
 module "waf" {
   source = "../.."
-  waf_prefix = "test"
+  waf_prefix = "test-ui"
   rule_blacklist_action               = "COUNT"
   rule_country_of_origin_action       = "COUNT"
   #rule_owasp_admin_access_action      = "COUNT"

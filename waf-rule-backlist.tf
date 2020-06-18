@@ -28,7 +28,7 @@ resource "aws_waf_rule" "blacklist" {
   depends_on = [aws_waf_ipset.blacklist]
   count = local.is_blacklist_enabled
   name = "${var.waf_prefix}-blacklist"
-  metric_name = "${var.waf_prefix}blacklistWafRule"
+  metric_name = replace("${var.waf_prefix}blacklistWafRule", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_ipset.blacklist[0].id
