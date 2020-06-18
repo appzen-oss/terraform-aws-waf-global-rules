@@ -55,19 +55,6 @@ locals {
   owasp_rules = setsubtract(local.owasp_rules_tmp, [{}])
 }
 
-output "group_owasp_rules" {
-  value = local.owasp_rules
-}
-
-# Random ID Generator
-resource "random_id" "this" {
-  count = var.enabled ? "1" : "0"
-  byte_length = "8"
-  keepers = {
-    target_scope = "global"
-  }
-}
-
 resource "aws_waf_rule_group" "owasp_top_10" {
   depends_on = [
     aws_waf_rule.owasp_auth_tokens,

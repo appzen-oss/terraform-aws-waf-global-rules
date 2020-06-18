@@ -14,7 +14,7 @@ variable "rule_rate_limit_priority" {
 variable "rule_rate_limit_count" {
   type        = number
   description = "The number requests allowed over a 5 minute period (minimum value of 100 is enforced)"
-  default     = 100
+  default     = 1000
 }
 variable "rule_rate_limit_paths" {
   type        = list(string)

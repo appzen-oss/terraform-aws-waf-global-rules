@@ -3,7 +3,7 @@
 variable "create_rule_group_owasp" {
   type        = bool
   description = "Create WAF rule group of OWASP rules"
-  default     = true
+  default     = false
 }
 
 variable "enable_actions" {

@@ -28,18 +28,18 @@ locals {
 
 resource "aws_waf_rule" "owasp_path_traversal" {
   count       = local.is_owasp_path_traversal_enabled
-  name        = "${var.waf_prefix}-generic-detect-rfi-lfi-traversal"
-  metric_name = replace("${var.waf_prefix}genericdetectrfilfitraversal", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-generic-detect-path-traversal"
+  metric_name = replace("${var.waf_prefix}genericdetectpathtraversal", "/[^0-9A-Za-z]/", "")
 
   predicates {
-    data_id = aws_waf_byte_match_set.match_rfi_lfi_traversal[0].id
+    data_id = aws_waf_byte_match_set.match_path_traversal[0].id
     negated = false
     type    = "ByteMatch"
   }
 }
-resource "aws_waf_byte_match_set" "match_rfi_lfi_traversal" {
+resource "aws_waf_byte_match_set" "match_path_traversal" {
   count = local.is_owasp_path_traversal_enabled
-  name  = "${var.waf_prefix}-generic-match-rfi-lfi-traversal"
+  name  = "${var.waf_prefix}-generic-match-path-traversal"
 
   dynamic "byte_match_tuples" {
     iterator = x

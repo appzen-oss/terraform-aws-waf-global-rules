@@ -20,8 +20,10 @@ variable "rule_country_of_origin_priority" {
 variable "rule_country_of_origin_set" {
   type        = list(string)
   description = "A list of country codes to block/allow."
-  default     = ["CN", "HK"]
+  default     = ["BR","CN","HK","ID","NG","PK","RO","RU","TR","UA","VN"]
 }
+
+
 variable "rule_country_of_origin_paths" {
   type        = list(string)
   description = "A list of paths to include in the waf rule. ex: [\"/my/sensitive/path\",\"/another/path\"]"
@@ -33,10 +35,10 @@ locals {
   is_country_of_origin_enabled = var.enabled && contains(var.enable_actions, var.rule_country_of_origin_action) ? 1 : 0
 }
 
-resource "aws_waf_rule" "country_of_origin_filter" {
+resource "aws_waf_rule" "country_of_origin" {
   count       = local.is_country_of_origin_enabled
-  name        = "${var.waf_prefix}-generic-country-of-origin-filter"
-  metric_name = replace("${var.waf_prefix}genericcountryoforiginfilter", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-generic-country-of-origin"
+  metric_name = replace("${var.waf_prefix}genericcountryoforigin", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_geo_match_set.geo_match_set[0].id

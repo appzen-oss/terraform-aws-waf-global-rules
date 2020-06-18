@@ -31,10 +31,10 @@ locals {
   is_owasp_admin_access_enabled = var.enabled && contains(var.enable_actions, var.rule_owasp_admin_access_action) ? 1 : 0
 }
 
-resource "aws_waf_rule" "detect_admin_access" {
+resource "aws_waf_rule" "owasp_admin_access" {
   count       = local.is_owasp_admin_access_enabled
-  name        = "${var.waf_prefix}-generic-detect-admin-access"
-  metric_name = replace("${var.waf_prefix}genericdetectadminaccess", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-generic-admin-access"
+  metric_name = replace("${var.waf_prefix}genericadminaccess", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_ipset.admin_remote_ipset[0].id
