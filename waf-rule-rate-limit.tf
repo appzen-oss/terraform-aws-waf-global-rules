@@ -37,6 +37,7 @@ resource "aws_waf_rate_based_rule" "rate_limit" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 resource "aws_waf_byte_match_set" "rate_limit" {
   count = local.is_rate_limit_enabled

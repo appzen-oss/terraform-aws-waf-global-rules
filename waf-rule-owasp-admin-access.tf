@@ -47,6 +47,7 @@ resource "aws_waf_rule" "owasp_admin_access" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 resource "aws_waf_ipset" "admin_remote_ipset" {
   count = local.is_owasp_admin_access_enabled

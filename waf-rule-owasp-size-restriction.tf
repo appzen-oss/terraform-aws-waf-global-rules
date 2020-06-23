@@ -54,6 +54,7 @@ resource "aws_waf_rule" "owasp_size_restriction" {
     negated = false
     type    = "SizeConstraint"
   }
+  tags = local.tags
 }
 resource "aws_waf_size_constraint_set" "size_restrictions" {
   count = local.is_owasp_size_restriction_enabled

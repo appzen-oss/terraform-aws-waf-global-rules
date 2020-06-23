@@ -50,6 +50,7 @@ resource "aws_waf_rule" "country_of_origin" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 
 resource "aws_waf_geo_match_set" "geo_match_set" {

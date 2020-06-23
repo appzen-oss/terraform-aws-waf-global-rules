@@ -36,6 +36,7 @@ resource "aws_waf_rule" "owasp_path_traversal" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 resource "aws_waf_byte_match_set" "match_path_traversal" {
   count = local.is_owasp_path_traversal_enabled

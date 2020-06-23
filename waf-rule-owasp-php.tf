@@ -59,6 +59,7 @@ resource "aws_waf_rule" "owasp_php" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 resource "aws_waf_byte_match_set" "match_php_insecure_uri" {
   count = local.is_owasp_php_enabled

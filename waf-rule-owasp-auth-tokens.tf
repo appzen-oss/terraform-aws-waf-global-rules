@@ -33,6 +33,7 @@ resource "aws_waf_rule" "owasp_auth_tokens" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 resource "aws_waf_byte_match_set" "match_auth_tokens" {
   count = local.is_owasp_auth_tokens_enabled

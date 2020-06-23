@@ -36,6 +36,7 @@ resource "aws_waf_rule" "owasp_ssi" {
     negated = false
     type    = "ByteMatch"
   }
+  tags = local.tags
 }
 resource "aws_waf_byte_match_set" "match_ssi" {
   count = local.is_owasp_ssi_enabled

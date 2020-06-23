@@ -151,6 +151,7 @@ resource "aws_waf_web_acl" "waf_acl" {
       type     = rule.value["type"]
     }
   }
+  tags = local.tags
 }
 
 /**/

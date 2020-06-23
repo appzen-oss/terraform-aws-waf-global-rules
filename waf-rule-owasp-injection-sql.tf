@@ -53,6 +53,7 @@ resource aws_waf_rule owasp_injection_sql {
     negated = false
     type    = "SqlInjectionMatch"
   }
+  tags = local.tags
 }
 
 resource aws_waf_sql_injection_match_set sql_injection_match_set {

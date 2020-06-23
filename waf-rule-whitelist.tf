@@ -35,4 +35,5 @@ resource "aws_waf_rule" "whitelist" {
     negated = false
     type = "IPMatch"
   }
+  tags = local.tags
 }

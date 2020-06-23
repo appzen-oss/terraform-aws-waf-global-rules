@@ -83,5 +83,6 @@ resource "aws_waf_rule_group" "owasp_top_10" {
       type     = "REGULAR"
     }
   }
+  tags = local.tags
 }
 /**/

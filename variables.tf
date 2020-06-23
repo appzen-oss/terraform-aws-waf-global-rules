@@ -18,6 +18,11 @@ variable "enabled" {
   default     = true
 }
 
+variable "environment" {
+  type        = string
+  description = "Deployment environment name"
+}
+
 variable "waf_prefix" {
   type        = string
   description = "A prefix to use for all named resources."

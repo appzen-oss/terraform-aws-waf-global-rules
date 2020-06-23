@@ -44,6 +44,7 @@ resource "aws_waf_rule" "owasp_csrf" {
     negated = true
     type    = "SizeConstraint"
   }
+  tags = local.tags
 }
 resource "aws_waf_byte_match_set" "match_csrf_method" {
   count = local.is_owasp_csrf_enabled
