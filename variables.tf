@@ -9,7 +9,7 @@ variable "create_rule_group_owasp" {
 variable "enable_actions" {
   type        = list(string)
   description = "List of valid actions for enabling indivisual rules"
-  default     = ["BLOCK", "COUNT"]
+  default     = ["ALLOW", "BLOCK", "COUNT"]
 }
 
 variable "enabled" {
