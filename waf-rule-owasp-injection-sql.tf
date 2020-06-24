@@ -45,8 +45,8 @@ locals {
 
 resource aws_waf_rule owasp_injection_sql {
   count       = local.is_owasp_injection_sql_enabled
-  name        = "${var.waf_prefix}-generic-mitigate-sqli"
-  metric_name = replace("${var.waf_prefix}genericmitigatesqli", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-injection-sql"
+  metric_name = replace("${var.waf_prefix}injectionsql", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_sql_injection_match_set.sql_injection_match_set[0].id
@@ -58,7 +58,7 @@ resource aws_waf_rule owasp_injection_sql {
 
 resource aws_waf_sql_injection_match_set sql_injection_match_set {
   count       = local.is_owasp_injection_sql_enabled
-  name = "${var.waf_prefix}-generic-detect-sqli"
+  name = "${var.waf_prefix}-detect-sqli"
   dynamic "sql_injection_match_tuples" {
     iterator = request_field
     for_each = setproduct(var.rule_sqli_request_fields_transforms, var.rule_sqli_request_fields)

@@ -46,8 +46,8 @@ locals {
 
 resource "aws_waf_rule" "owasp_size_restriction" {
   count       = local.is_owasp_size_restriction_enabled
-  name        = "${var.waf_prefix}-generic-restrict-sizes"
-  metric_name = replace("${var.waf_prefix}genericrestrictsizes", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-restrict-sizes"
+  metric_name = replace("${var.waf_prefix}restrictsizes", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_size_constraint_set.size_restrictions[0].id

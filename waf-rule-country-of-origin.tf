@@ -37,8 +37,8 @@ locals {
 
 resource "aws_waf_rule" "country_of_origin" {
   count       = local.is_country_of_origin_enabled
-  name        = "${var.waf_prefix}-generic-country-of-origin"
-  metric_name = replace("${var.waf_prefix}genericcountryoforigin", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-country-of-origin"
+  metric_name = replace("${var.waf_prefix}countryoforigin", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_geo_match_set.geo_match_set[0].id

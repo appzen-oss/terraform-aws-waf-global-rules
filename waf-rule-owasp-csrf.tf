@@ -30,8 +30,8 @@ locals {
 
 resource "aws_waf_rule" "owasp_csrf" {
   count       = local.is_owasp_csrf_enabled
-  name        = "${var.waf_prefix}-generic-enforce-csrf"
-  metric_name = replace("${var.waf_prefix}genericenforcecsrf", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-csrf"
+  metric_name = replace("${var.waf_prefix}csrf", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_byte_match_set.match_csrf_method[0].id
@@ -48,7 +48,7 @@ resource "aws_waf_rule" "owasp_csrf" {
 }
 resource "aws_waf_byte_match_set" "match_csrf_method" {
   count = local.is_owasp_csrf_enabled
-  name  = "${var.waf_prefix}-generic-match-csrf-method"
+  name  = "${var.waf_prefix}-match-csrf-method"
   byte_match_tuples {
     text_transformation   = "LOWERCASE"
     target_string         = "post"
@@ -61,7 +61,7 @@ resource "aws_waf_byte_match_set" "match_csrf_method" {
 }
 resource "aws_waf_size_constraint_set" "csrf_token_set" {
   count = local.is_owasp_csrf_enabled
-  name  = "${var.waf_prefix}-generic-match-csrf-token"
+  name  = "${var.waf_prefix}-match-csrf-token"
 
   size_constraints {
     text_transformation = "NONE"

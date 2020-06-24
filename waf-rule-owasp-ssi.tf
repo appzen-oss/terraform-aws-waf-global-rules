@@ -29,8 +29,8 @@ locals {
 
 resource "aws_waf_rule" "owasp_ssi" {
   count       = local.is_owasp_ssi_enabled
-  name        = "${var.waf_prefix}-generic-detect-ssi"
-  metric_name = replace("${var.waf_prefix}genericdetectssi", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-detect-ssi"
+  metric_name = replace("${var.waf_prefix}detectssi", "/[^0-9A-Za-z]/", "")
   predicates {
     data_id = aws_waf_byte_match_set.match_ssi[0].id
     negated = false
@@ -40,7 +40,7 @@ resource "aws_waf_rule" "owasp_ssi" {
 }
 resource "aws_waf_byte_match_set" "match_ssi" {
   count = local.is_owasp_ssi_enabled
-  name  = "${var.waf_prefix}-generic-match-ssi"
+  name  = "${var.waf_prefix}-match-ssi"
   dynamic "byte_match_tuples" {
     iterator = x
     for_each = var.rule_ssi_file_extensions

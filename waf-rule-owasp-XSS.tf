@@ -40,8 +40,8 @@ locals {
 
 resource "aws_waf_rule" "owasp_xss" {
   count       = local.is_owasp_xss_enabled
-  name        = "${var.waf_prefix}-generic-mitigate-xss"
-  metric_name = replace("${var.waf_prefix}genericmitigatexss", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-xss"
+  metric_name = replace("${var.waf_prefix}xss", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_xss_match_set.xss_match_set[0].id
@@ -53,7 +53,7 @@ resource "aws_waf_rule" "owasp_xss" {
 
 resource "aws_waf_xss_match_set" "xss_match_set" {
   count       = local.is_owasp_xss_enabled
-  name  = "${var.waf_prefix}-generic-detect-xss"
+  name  = "${var.waf_prefix}-detect-xss"
 
   dynamic "xss_match_tuples" {
     iterator = request_field

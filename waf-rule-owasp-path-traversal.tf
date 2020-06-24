@@ -28,8 +28,8 @@ locals {
 
 resource "aws_waf_rule" "owasp_path_traversal" {
   count       = local.is_owasp_path_traversal_enabled
-  name        = "${var.waf_prefix}-generic-detect-path-traversal"
-  metric_name = replace("${var.waf_prefix}genericdetectpathtraversal", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-path-traversal"
+  metric_name = replace("${var.waf_prefix}pathtraversal", "/[^0-9A-Za-z]/", "")
 
   predicates {
     data_id = aws_waf_byte_match_set.match_path_traversal[0].id
@@ -40,7 +40,7 @@ resource "aws_waf_rule" "owasp_path_traversal" {
 }
 resource "aws_waf_byte_match_set" "match_path_traversal" {
   count = local.is_owasp_path_traversal_enabled
-  name  = "${var.waf_prefix}-generic-match-path-traversal"
+  name  = "${var.waf_prefix}-match-path-traversal"
 
   dynamic "byte_match_tuples" {
     iterator = x
