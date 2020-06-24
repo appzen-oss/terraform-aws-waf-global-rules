@@ -124,8 +124,8 @@ resource "aws_waf_web_acl" "waf_acl" {
     aws_waf_rule.whitelist,
   ]
   count       = var.enabled ? 1 : 0
-  name        = "${var.waf_prefix}-generic-acl"
-  metric_name = replace("${var.waf_prefix}genericacl", "/[^0-9A-Za-z]/", "")
+  name        = "${var.waf_prefix}-acl"
+  metric_name = replace("${var.waf_prefix}acl", "/[^0-9A-Za-z]/", "")
   ## Dynamic block to allow optional configuration of logging_configuration
   #dynamic "logging_configuration" {
   #  iterator = x
